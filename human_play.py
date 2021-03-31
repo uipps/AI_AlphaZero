@@ -3,8 +3,8 @@
 human VS AI models
 Input your move in the format: 2,3
 
-python human_play.py --file best_policy_6_6_4.model --width 6 --num 4
-python human_play.py --file best_policy_8_8_5.model --width 8 --num 5
+python human_play.py --file best_policy_6_6_4.model2 --width 6 --num 4 --computer_first 0
+python human_play.py --file best_policy_8_8_5.model --width 8 --num 5 --computer_first 0
 python human_play.py --file best_policy_tensorflow_10_10_5.model --width 10 --num 5  (几个文件试了，文件格式不对)
 """
 
@@ -54,16 +54,20 @@ def run():
     n = 4
     width, height = 6, 6
     model_file = 'best_policy_6_6_4.model'
+    start_player=1
 
     ''' 获取命令行参数 '''
     parser = argparse.ArgumentParser()
     parser.add_argument('--file', type=str, default='best_policy_6_6_4.model', help='model file , default 6*6，4 in a row')
     parser.add_argument('--width', type=int, default=6, help='width and height is the same! , default 6')
     parser.add_argument('--num', type=int, default=4, help='num in row, default 4')
+    parser.add_argument('--computer_first', type=int, default=1, help='0:humen first; 1:computer first ; default 1')
+    
     args = parser.parse_args()
     n = args.num
     width = height = args.width
     model_file = args.file
+    start_player = args.computer_first
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -96,7 +100,7 @@ def run():
         human = Human()
 
         # set start_player=0 for human first
-        game.start_play(human, mcts_player, start_player=1, is_shown=1)
+        game.start_play(human, mcts_player, start_player, is_shown=1)
     except KeyboardInterrupt:
         print('\n\rquit')
 
