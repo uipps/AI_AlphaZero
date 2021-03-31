@@ -8,7 +8,7 @@ Input your move in the format: 2,3
 
 python human_play.py --file best_policy_6_6_4.model2 --width 6 --num 4 --player2_first 0 --two_computer 1
 python human_play.py --file best_policy_8_8_5.model --width 8 --num 5 --player2_first 0 --two_computer 1
-python human_play.py --file best_policy_tensorflow_10_10_5.model --width 10 --num 5  (几个文件试了，文件格式不对)
+python human_play.py --file best_policy_tensorflow_10_10_5.model --width 10 --num 5 --two_computer 1
 """
 
 from __future__ import print_function
@@ -21,7 +21,7 @@ from mcts_alphaZero import MCTSPlayer
 from policy_value_net_numpy import PolicyValueNetNumpy
 # from policy_value_net import PolicyValueNet  # Theano and Lasagne
 # from policy_value_net_pytorch import PolicyValueNet  # Pytorch
-# from policy_value_net_tensorflow import PolicyValueNet # Tensorflow
+from policy_value_net_tensorflow import PolicyValueNet # Tensorflow
 # from policy_value_net_keras import PolicyValueNet  # Keras
 
 
@@ -54,10 +54,10 @@ class Human(object):
 
 
 def run():
-    n = 4
-    width, height = 6, 6
-    model_file = 'best_policy_6_6_4.model'
-    start_player=1
+    #n = 4
+    #width, height = 6, 6
+    #model_file = 'best_policy_6_6_4.model'
+    #start_player=1
     c_puct=5
     n_playout=400       # set larger n_playout for better performance
 
@@ -86,18 +86,18 @@ def run():
 
         # ############### human VS AI ###################
         # load the trained policy_value_net in either Theano/Lasagne, PyTorch or TensorFlow
-
-        # best_policy = PolicyValueNet(width, height, model_file = model_file)
-        # mcts_player = MCTSPlayer(best_policy.policy_value_fn, c_puct=5, n_playout=400)
-
-        # load the provided model (trained in Theano/Lasagne) into a MCTS player written in pure numpy
-        try:
-            policy_param = pickle.load(open(model_file, 'rb'))
-        except:
-            policy_param = pickle.load(open(model_file, 'rb'),
-                           encoding='bytes')  # To support python3
-        best_policy = PolicyValueNetNumpy(width, height, policy_param)
-        mcts_player = MCTSPlayer(best_policy.policy_value_fn, c_puct, n_playout)
+        if 'tensorflow' in model_file.lower() or 'pytorch' in model_file.lower():  # 文件名中包含tensorflow，pytorch
+            best_policy = PolicyValueNet(width, height, model_file = model_file)
+            mcts_player = MCTSPlayer(best_policy.policy_value_fn, c_puct=5, n_playout=400)
+        else:
+            # load the provided model (trained in Theano/Lasagne) into a MCTS player written in pure numpy
+            try:
+                policy_param = pickle.load(open(model_file, 'rb'))
+            except:
+                policy_param = pickle.load(open(model_file, 'rb'),
+                                encoding='bytes')  # To support python3
+            best_policy = PolicyValueNetNumpy(width, height, policy_param)
+            mcts_player = MCTSPlayer(best_policy.policy_value_fn, c_puct, n_playout)
 
         # uncomment the following line to play with pure MCTS (it's much weaker even with a larger n_playout)
         # mcts_player = MCTS_Pure(c_puct=5, n_playout=1000)
