@@ -3,8 +3,11 @@
 human VS AI models
 Input your move in the format: 2,3
 
-python human_play.py --file best_policy_6_6_4.model2 --width 6 --num 4 --computer_first 0
-python human_play.py --file best_policy_8_8_5.model --width 8 --num 5 --computer_first 0
+玩家1（player1）：human(人)
+玩家2（player2）：computer(电脑)
+
+python human_play.py --file best_policy_6_6_4.model2 --width 6 --num 4 --player2_first 0 --two_computer 1
+python human_play.py --file best_policy_8_8_5.model --width 8 --num 5 --player2_first 0 --two_computer 1
 python human_play.py --file best_policy_tensorflow_10_10_5.model --width 10 --num 5  (几个文件试了，文件格式不对)
 """
 
@@ -55,19 +58,24 @@ def run():
     width, height = 6, 6
     model_file = 'best_policy_6_6_4.model'
     start_player=1
+    c_puct=5
+    n_playout=400       # set larger n_playout for better performance
 
     ''' 获取命令行参数 '''
     parser = argparse.ArgumentParser()
     parser.add_argument('--file', type=str, default='best_policy_6_6_4.model', help='model file , default 6*6，4 in a row')
     parser.add_argument('--width', type=int, default=6, help='width and height is the same! , default 6')
     parser.add_argument('--num', type=int, default=4, help='num in row, default 4')
-    parser.add_argument('--computer_first', type=int, default=1, help='0:humen first; 1:computer first ; default 1')
-    
+    parser.add_argument('--player2_first', type=int, default=1, help='0:player1(humen) first; 1:player2(computer) first ; default 1')
+    parser.add_argument('--two_computer', type=int, default=0, help='1:tow computer play; other wise: human and computer; default 0')
+    #parser.add_argument('--two_human', type=int, default=0, help='1:tow humen play; other wise: human and computer; default 0')
+
     args = parser.parse_args()
     n = args.num
     width = height = args.width
     model_file = args.file
-    start_player = args.computer_first
+    start_player = args.player2_first
+    two_computer = args.two_computer
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -87,17 +95,19 @@ def run():
             policy_param = pickle.load(open(model_file, 'rb'))
         except:
             policy_param = pickle.load(open(model_file, 'rb'),
-                                       encoding='bytes')  # To support python3
+                           encoding='bytes')  # To support python3
         best_policy = PolicyValueNetNumpy(width, height, policy_param)
-        mcts_player = MCTSPlayer(best_policy.policy_value_fn,
-                                 c_puct=5,
-                                 n_playout=400)  # set larger n_playout for better performance
+        mcts_player = MCTSPlayer(best_policy.policy_value_fn, c_puct, n_playout)
 
         # uncomment the following line to play with pure MCTS (it's much weaker even with a larger n_playout)
         # mcts_player = MCTS_Pure(c_puct=5, n_playout=1000)
 
         # human player, input your move in the format: 2,3
-        human = Human()
+        #human = Human()
+        if 1 == two_computer:
+            human = MCTSPlayer(best_policy.policy_value_fn, c_puct, n_playout)
+        else:
+            human = Human()
 
         # set start_player=0 for human first
         game.start_play(human, mcts_player, start_player, is_shown=1)
