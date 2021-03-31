@@ -33,3 +33,8 @@ from policy_value_net_pytorch import PolicyValueNet  # Pytorch
 ```
 其他加上注释，只留一个即可，每行后面有注释用的哪个库
 
+
+## 测试tensorflow
+```
+python master_process.py
+```
