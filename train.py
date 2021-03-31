@@ -20,15 +20,7 @@ from policy_value_net_pytorch import PolicyValueNet  # Pytorch
 
 class TrainPipeline():
     def __init__(self, init_model=None):
-        """
         # params of the board and the game
-        init_model='./best_policy_tensorflow_10_10_5.model'
-        board_width=10
-        board_height=10
-        check_freq=10
-        c_puct=5
-        n_playout=400
-        """
         self.board_width = 6
         self.board_height = 6
         self.n_in_row = 4
