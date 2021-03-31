@@ -3,10 +3,15 @@
 human VS AI models
 Input your move in the format: 2,3
 
+python human_play.py --file best_policy_6_6_4.model --width 6 --num 4
+python human_play.py --file best_policy_8_8_5.model --width 8 --num 5
+python human_play.py --file best_policy_tensorflow_10_10_5.model --width 10 --num 5  (几个文件试了，文件格式不对)
 """
 
 from __future__ import print_function
 import pickle
+import sys
+import argparse
 from game import Board, Game
 from mcts_pure import MCTSPlayer as MCTS_Pure
 from mcts_alphaZero import MCTSPlayer
@@ -49,6 +54,20 @@ def run():
     n = 4
     width, height = 6, 6
     model_file = 'best_policy_6_6_4.model'
+
+    ''' 获取命令行参数 '''
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--file', type=str, default='best_policy_6_6_4.model', help='model file , default 6*6，4 in a row')
+    parser.add_argument('--width', type=int, default=6, help='width and height is the same! , default 6')
+    parser.add_argument('--num', type=int, default=4, help='num in row, default 4')
+    args = parser.parse_args()
+    n = args.num
+    width = height = args.width
+    model_file = args.file
+
+    if len(sys.argv) == 1:
+        parser.print_help()
+
     try:
         board = Board(width=width, height=height, n_in_row=n)
         game = Game(board)

@@ -6,7 +6,6 @@ An implementation of the training pipeline of AlphaZero for Gomoku
 
 from __future__ import print_function
 import random
-import time
 import numpy as np
 from collections import defaultdict, deque
 from game import Board, Game
@@ -166,7 +165,7 @@ class TrainPipeline():
         """run the training pipeline"""
         try:
             for i in range(self.game_batch_num):
-                current_time = time.strftime("%Y-%m-%d_%H_%M_%S", time.localtime(time.time()))
+                #current_time = time.strftime("%Y-%m-%d_%H_%M_%S", time.localtime(time.time()))
                 self.collect_selfplay_data(self.play_batch_size)
                 print("batch i:{}, episode_len:{}".format(
                         i+1, self.episode_len))
@@ -177,12 +176,12 @@ class TrainPipeline():
                 if (i+1) % self.check_freq == 0:
                     print("current self-play batch: {}".format(i+1))
                     win_ratio = self.policy_evaluate()
-                    self.policy_value_net.save_model('./current_policy.model-' + current_time)
+                    self.policy_value_net.save_model('./current_policy.model')
                     if win_ratio > self.best_win_ratio:
                         print("New best policy!!!!!!!!")
                         self.best_win_ratio = win_ratio
                         # update the best_policy
-                        self.policy_value_net.save_model('./best_policy.model-' + current_time)
+                        self.policy_value_net.save_model('./best_policy.model')
                         if (self.best_win_ratio == 1.0 and
                                 self.pure_mcts_playout_num < 5000):
                             self.pure_mcts_playout_num += 1000
@@ -192,5 +191,5 @@ class TrainPipeline():
 
 
 if __name__ == '__main__':
-    training_pipeline = TrainPipeline()
+    training_pipeline = TrainPipeline('./best_policy.model')
     training_pipeline.run()
