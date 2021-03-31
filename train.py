@@ -13,9 +13,9 @@ from game import Board, Game
 from mcts_pure import MCTSPlayer as MCTS_Pure
 from mcts_alphaZero import MCTSPlayer
 #from policy_value_net import PolicyValueNet  # Theano and Lasagne
-from policy_value_net_pytorch import PolicyValueNet  # Pytorch
+#from policy_value_net_pytorch import PolicyValueNet  # Pytorch
 #from policy_value_net_tensorflow import PolicyValueNet # Tensorflow
-#from policy_value_net_keras import PolicyValueNet # Keras
+from policy_value_net_keras import PolicyValueNet # Keras
 
 
 class TrainPipeline():
@@ -166,6 +166,7 @@ class TrainPipeline():
         """run the training pipeline"""
         try:
             for i in range(self.game_batch_num):
+                current_time = time.strftime("%Y-%m-%d_%H_%M_%S", time.localtime(time.time()))
                 self.collect_selfplay_data(self.play_batch_size)
                 print("batch i:{}, episode_len:{}".format(
                         i+1, self.episode_len))
@@ -176,12 +177,12 @@ class TrainPipeline():
                 if (i+1) % self.check_freq == 0:
                     print("current self-play batch: {}".format(i+1))
                     win_ratio = self.policy_evaluate()
-                    self.policy_value_net.save_model('./current_policy.model-{}'.format(current_time))
+                    self.policy_value_net.save_model('./current_policy.model-' + current_time)
                     if win_ratio > self.best_win_ratio:
                         print("New best policy!!!!!!!!")
                         self.best_win_ratio = win_ratio
                         # update the best_policy
-                        self.policy_value_net.save_model('./best_policy.model-{}'.format(current_time))
+                        self.policy_value_net.save_model('./best_policy.model-' + current_time)
                         if (self.best_win_ratio == 1.0 and
                                 self.pure_mcts_playout_num < 5000):
                             self.pure_mcts_playout_num += 1000
