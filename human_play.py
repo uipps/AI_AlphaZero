@@ -9,6 +9,7 @@ Input your move in the format: 2,3
 python human_play.py --file best_policy_6_6_4.model2 --width 6 --num 4 --player2_first 0 --two_computer 1
 python human_play.py --file best_policy_8_8_5.model --width 8 --num 5 --player2_first 0 --two_computer 1
 python human_play.py --file best_policy_tensorflow_10_10_5.model --width 10 --num 5 --two_computer 1
+python human_play.py --file best_policy_pytorch_6_6_4.model --width 6 --num 4 --player2_first 0 --two_computer 0   要修改代码，from pytorch库
 """
 
 from __future__ import print_function
@@ -20,7 +21,7 @@ from mcts_pure import MCTSPlayer as MCTS_Pure
 from mcts_alphaZero import MCTSPlayer
 from policy_value_net_numpy import PolicyValueNetNumpy
 # from policy_value_net import PolicyValueNet  # Theano and Lasagne
-# from policy_value_net_pytorch import PolicyValueNet  # Pytorch
+#from policy_value_net_pytorch import PolicyValueNet  # Pytorch
 from policy_value_net_tensorflow import PolicyValueNet # Tensorflow
 # from policy_value_net_keras import PolicyValueNet  # Keras
 
