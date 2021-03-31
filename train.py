@@ -12,9 +12,9 @@ from game import Board, Game
 from mcts_pure import MCTSPlayer as MCTS_Pure
 from mcts_alphaZero import MCTSPlayer
 #from policy_value_net import PolicyValueNet  # Theano and Lasagne
-#from policy_value_net_pytorch import PolicyValueNet  # Pytorch
-#from policy_value_net_tensorflow import PolicyValueNet # Tensorflow
-from policy_value_net_keras import PolicyValueNet # Keras
+#from policy_value_net_pytorch import PolicyValueNet  # Pytorch          (win10_py37可以)
+#from policy_value_net_tensorflow import PolicyValueNet # Tensorflow    (win10_py37可以)
+from policy_value_net_keras import PolicyValueNet # Keras              (win10_py37可以)
 
 
 class TrainPipeline():
@@ -186,10 +186,14 @@ class TrainPipeline():
                                 self.pure_mcts_playout_num < 5000):
                             self.pure_mcts_playout_num += 1000
                             self.best_win_ratio = 0.0
+                        #return 0
         except KeyboardInterrupt:
             print('\n\rquit')
 
 
 if __name__ == '__main__':
-    training_pipeline = TrainPipeline('./best_policy.model')
+    training_pipeline = TrainPipeline('./best_policy_keras_6_6_4_second.model')  #(win10_py37 keras训练出来的)
+    #training_pipeline = TrainPipeline('./best_policy_6_6_4.model2')  #(win10_py37 试了都不行，不知道是哪个训练出来的)
+    #training_pipeline = TrainPipeline('./best_policy_pytorch_6_6_4.model')     #(win10_py37 pytorch训练出来的)
+    #training_pipeline = TrainPipeline()
     training_pipeline.run()
