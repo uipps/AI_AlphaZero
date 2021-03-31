@@ -155,6 +155,10 @@ class Game(object):
                 else:
                     print('_'.center(8), end='')
             print('\r\n\r\n')
+        # 打印上手下子位置
+        if -1 != self.board.last_move:
+            location = self.board.move_to_location(self.board.last_move)
+            print('last move: {}' . format(location))
 
     def start_play(self, player1, player2, start_player=0, is_shown=1):
         """start a game between two players"""
