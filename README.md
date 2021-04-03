@@ -3,3 +3,9 @@
 
 ## 五子棋，请切换到gomoku分支：
 gomoku分支 [https://github.com/uipps/AI_AlphaZero/tree/gomoku](https://github.com/uipps/AI_AlphaZero/tree/gomoku)
+
+## 中国象棋，python2.7版，请切换到cnChess_py27分支：
+gomoku分支 [https://github.com/uipps/AI_AlphaZero/tree/cnChess_py27](https://github.com/uipps/AI_AlphaZero/tree/cnChess_py27)
+
+## 中国象棋，python3.7版，请切换到cnChess分支：
+gomoku分支 [https://github.com/uipps/AI_AlphaZero/tree/cnChess](https://github.com/uipps/AI_AlphaZero/tree/cnChess)
