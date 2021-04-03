@@ -1,5 +1,12 @@
-# AI_AlphaZero
-人工智能，深度学习，基于AlphaZero的算法，实现五子棋、中国象棋、围棋等的自学习，还将尝试用AlphaZero实现青蛙过河、野人过河、走迷宫、两人取火柴游戏等...... 不同分支代表不同游戏，例如gomoku，gobang就是五子棋，chess_chinese ( Chinese chess ) 等
+# 这是中国象棋，python2版本
+  暂不支持python3，本程序在python2.7下运行通过。 具备基本棋盘和走子功能，单机版人人对战，非人工智能版。
+  这是的《人工智能导论》的最后课程项目，参考代码github上Linzertorte/ChineseChess，在此感谢！
 
-## 五子棋，请切换到gomoku分支：
-gomoku分支 [https://github.com/uipps/AI_AlphaZero/tree/gomoku](https://github.com/uipps/AI_AlphaZero/tree/gomoku)
+## 象棋，python2.7版，本分支cnChess_py27地址：
+cnChess_py27分支 [https://github.com/uipps/AI_AlphaZero/tree/gomoku](https://github.com/uipps/AI_AlphaZero/tree/cnChess_py27)
+
+## 运行
+命令行下执行：
+```
+python ChessGame.py
+```
