@@ -13,6 +13,12 @@ python main.py --mode play --ai_count 1 --ai_function mcts --play_playout 1200 -
  - --delay和--end_delay默认就好，两个ai下棋太快，就不知道俩ai怎么下的了：）
  - --human_color 指定人类棋手的颜色，w是先手，b是后手
 
+### 电脑有点弱，可以下载训练文件
+```
+https://pan.baidu.com/s/1dLvxFFpeWZK-aZ2Koewrvg
+```
+不过这个训练似乎也很弱，你也可以训练。
+
 
 ## 也可自己训练
 但是需要你的显卡、cpu够好哦，才能训练出AI高手，不然依然很烂，训练命令
