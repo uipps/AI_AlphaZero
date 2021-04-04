@@ -35,3 +35,10 @@ python main.py --mode train --train_playout 1200 --batch_size 512 --search_threa
  - --processor 指定是使用cpu还是gpu，默认是cpu
  - --num_gpus 指定gpu的个数，默认是1
  - --res_block_nums 指定残差块的层数，论文中是19或39层，我默认是7
+
+
+## tf2测试，不过运行有点问题
+运行和训练跟上面main.py参数一样，就是把main.py换成main_tf2.py即可，其他参数一样，如：
+```
+python main_tf2.py --mode play --ai_count 1 --ai_function mcts --play_playout 1200 --human_color w
+```
