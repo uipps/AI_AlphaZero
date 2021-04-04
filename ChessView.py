@@ -1,4 +1,6 @@
 import Tkinter
+import time
+import Const
 
 
 def board_coord(x):
@@ -15,6 +17,12 @@ class ChessView:
     can.create_image(0, 0, image=img, anchor=Tkinter.NW)
     piece_images = dict()
     move_images = []
+
+    def __init__(self, control):
+        self.control = control
+        if self.control.game_mode != 2:
+            self.can.bind('<Button-1>', self.control.callback)
+
     def draw_board(self, board):
         self.piece_images.clear()
         self.move_images = []
@@ -26,11 +34,27 @@ class ChessView:
             for (x, y) in board.selected_piece.get_move_locs(board):
                 self.move_images.append(Tkinter.PhotoImage(file="images/OOS.gif"))
                 self.can.create_image(board_coord(x), board_coord(y), image=self.move_images[-1])
+
     def showMsg(self, msg):
+        print(msg)
         self.root.title(msg)
-    def __init__(self, control):
-        self.control = control
-        self.can.bind('<Button-1>', self.control.callback)
 
     def start(self):
-        Tkinter.mainloop()
+        if self.control.game_mode == 2:
+            self.root.update()
+            time.sleep(Const.delay)
+            while True:
+                game_end = self.control.game_mode_2()
+                self.root.update()
+                time.sleep(Const.delay)
+                if game_end:
+                    time.sleep(Const.end_delay)
+                    self.quit()
+                    return
+        else:
+            self.root.mainloop()
+
+    # below added by Fei Li
+
+    def quit(self):
+        self.root.quit()

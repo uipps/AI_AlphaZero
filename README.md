@@ -6,7 +6,12 @@
 cnChess_py27分支 [https://github.com/uipps/AI_AlphaZero/tree/gomoku](https://github.com/uipps/AI_AlphaZero/tree/cnChess_py27)
 
 ## 运行
+
 命令行下执行：
 ```
-python ChessGame.py
+python ChessGame.py -m 0                                             	-- 两个人对战
+python ChessGame.py -m 1 -a AI_random       		-- 1人1机器对战
+python ChessGame.py -m 2 -a AI_random AI_search	-- 两个机器对战
+python ChessGame.py -m 2 -a AI_MCTS AI_MCTSV             -- 两个机器对战
+
 ```

@@ -4,6 +4,7 @@ class ChessPiece:
 
     selected = False
     is_king = False
+
     def __init__(self, x, y, is_red):
         self.x = x
         self.y = y
@@ -18,12 +19,14 @@ class ChessPiece:
                 if self.can_move(board, x-self.x, y-self.y):
                     moves.append((x,y))
         return moves
-    def move(self, board, dx, dy):
+
+    def move(self, board, dx, dy, is_calc=False):
         nx, ny = self.x + dx, self.y + dy
         if (nx, ny) in board.pieces:
             board.remove(nx, ny)
         board.remove(self.x, self.y)
-        #print 'Move a chessman from (%d,%d) to (%d,%d)'%(self.x, self.y, self.x+dx, self.y+dy)
+        if not is_calc:
+            print('Move %s from (%d,%d) to (%d,%d)' % (self.name, self.x, self.y, self.x+dx, self.y+dy))
         self.x += dx
         self.y += dy
         board.pieces[self.x, self.y] = self
@@ -41,3 +44,14 @@ class ChessPiece:
             x += sx
             y += sy
         return cnt
+
+    # below added by Fei Li
+    def get_moves_slow(self, board):
+        moves = []
+        for x in xrange(9):
+            for y in xrange(10):
+                if (x,y) in board.pieces and board.pieces[x,y].is_red == self.is_red:
+                    continue
+                if self.can_move(board, x-self.x, y-self.y):
+                    moves.append((self.x, self.y, x-self.x, y-self.y))
+        return moves

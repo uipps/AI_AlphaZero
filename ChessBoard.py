@@ -5,6 +5,7 @@ from chessman.Shi import *
 from chessman.Xiang import *
 from chessman.Ma import *
 from chessman.Che import *
+import copy
 
 
 class ChessBoard:
@@ -17,22 +18,20 @@ class ChessBoard:
     pieces[6, 3] = Bing(6, 3, True)
     pieces[8, 3] = Bing(8, 3, True)
 
-    pieces[1,2] = Pao(1, 2, True)
-    pieces[7,2] = Pao(7, 2, True)
+    pieces[1, 2] = Pao(1, 2, True)
+    pieces[7, 2] = Pao(7, 2, True)
 
-    pieces[3,0] = Shi(3, 0, True)
-    pieces[5,0] = Shi(5, 0, True)
+    pieces[3, 0] = Shi(3, 0, True)
+    pieces[5, 0] = Shi(5, 0, True)
 
-    pieces[2,0] = Xiang(2, 0, True)
-    pieces[6,0] = Xiang(6, 0, True)
+    pieces[2, 0] = Xiang(2, 0, True)
+    pieces[6, 0] = Xiang(6, 0, True)
 
     pieces[1, 0] = Ma(1, 0, True)
     pieces[7, 0] = Ma(7, 0, True)
 
     pieces[0, 0] = Che(0, 0, True)
     pieces[8, 0] = Che(8, 0, True)
-
-
 
     pieces[4, 9] = Shuai(4, 9, False)
 
@@ -42,14 +41,14 @@ class ChessBoard:
     pieces[6, 6] = Bing(6, 6, False)
     pieces[8, 6] = Bing(8, 6, False)
 
-    pieces[1,7] = Pao(1, 7, False)
-    pieces[7,7] = Pao(7, 7, False)
+    pieces[1, 7] = Pao(1, 7, False)
+    pieces[7, 7] = Pao(7, 7, False)
 
-    pieces[3,9] = Shi(3, 9, False)
-    pieces[5,9] = Shi(5, 9, False)
+    pieces[3, 9] = Shi(3, 9, False)
+    pieces[5, 9] = Shi(5, 9, False)
 
-    pieces[2,9] = Xiang(2, 9, False)
-    pieces[6,9] = Xiang(6, 9, False)
+    pieces[2, 9] = Xiang(2, 9, False)
+    pieces[6, 9] = Xiang(6, 9, False)
 
     pieces[1, 9] = Ma(1, 9, False)
     pieces[7, 9] = Ma(7, 9, False)
@@ -65,8 +64,8 @@ class ChessBoard:
     def can_move(self, x, y, dx, dy):
         return self.pieces[x, y].can_move(self, dx, dy)
 
-    def move(self, x, y, dx, dy):
-        return self.pieces[x, y].move(self, dx, dy)
+    def move(self, x, y, dx, dy, is_calc=False):
+        return self.pieces[x, y].move(self, dx, dy, is_calc)
 
     def remove(self, x, y):
         del self.pieces[x, y]
@@ -95,12 +94,30 @@ class ChessBoard:
             ox, oy = self.selected_piece.x, self.selected_piece.y
             if self.can_move(ox, oy, x-ox, y-oy):
                 self.move(ox, oy, x-ox, y-oy)
-                self.pieces[x,y].selected = False
+                self.pieces[x, y].selected = False
                 self.selected_piece = None
                 return True
             return False
         for key in self.pieces.keys():
             self.pieces[key].selected = False
         self.pieces[x, y].selected = True
-        self.selected_piece = self.pieces[x,y]
+        self.selected_piece = self.pieces[x, y]
         return False
+
+    # below added by Fei Li
+
+    def get_all_moves(self, player_is_red):
+        moves = []
+        for (x, y) in self.pieces.keys():
+            if self.pieces[x, y].is_red == player_is_red:
+                moves.extend(self.pieces[x, y].get_moves(self))
+        return moves
+
+    def deepcopy(self):
+        new_board = ChessBoard()
+        new_board.pieces.clear()
+        new_board.pieces = copy.deepcopy(self.pieces)
+        return new_board
+
+    def hash(self, is_red):
+        return hash(frozenset([(x, y, self.pieces[x, y].ID) for x, y in self.pieces])), is_red
