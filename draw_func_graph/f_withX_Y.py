@@ -11,6 +11,11 @@ python3.7   （python2.7报错）
   -- 设定x,y的取值范围和步长s
   python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "1/3*x*x*x - x" -x 2 -y 1 -s 0.001
 
+  python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "np.cos(x)" -x 2 -y 1 -s 0.1
+
+  python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "np.cos(x)" -x 2 -y 1.5  
+  
+  python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "np.sqrt(x)" -b 0 -x 4 --y_min 0 -y 2 
 '''
 
 import matplotlib.pyplot as plt  #导入matplotlib库
@@ -27,6 +32,7 @@ def run():
     parser.add_argument('-b', type=float, help='xrange, begin, default -2')
     parser.add_argument('-x', type=float, default=2, help='xrange, end, default 2')
     parser.add_argument('-y', type=float, default=2, help='y-Range, begin and end, default 2')
+    parser.add_argument('--y_min', type=float, help='y-Range-min, begin, default -2')
     parser.add_argument('-s', type=float, default=0.01, help='x-step, end, default 0.1')
 
     args = parser.parse_args()
@@ -34,10 +40,13 @@ def run():
     xBegin = args.b
     xEnd = args.x         # x-range , max
     yMax = args.y
+    yMin = args.y_min
     xStep = args.s
     #print(yfunc)
-    if not xBegin:
+    if None==xBegin:
         xBegin = -1 * xEnd	# 默认对称，取x的反
+    if None==yMin:
+        yMin = -1 * yMax
 
     ''' 画函数图 '''
     ## 1.创建画布并引入axisartist工具。
@@ -67,8 +76,8 @@ def run():
     ## 3.在带箭头的x-y坐标轴背景下，绘制函数图像
     #生成x步长为0.1的列表数据
     x = np.arange(xBegin, xEnd, xStep)
-    #plt.xlim(xBegin, xEnd)        #设置x、y坐标轴的范围
-    plt.ylim(-1*yMax, yMax)
+    plt.xlim(xBegin, xEnd)        #设置x、y坐标轴的范围
+    plt.ylim(yMin, yMax)
 
     #生成sigmiod形式的y数据
     #y=1/(1+np.exp(-x))
