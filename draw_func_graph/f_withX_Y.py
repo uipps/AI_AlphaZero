@@ -16,6 +16,11 @@ python3.7   （python2.7报错）
   python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "np.cos(x)" -x 2 -y 1.5  
   
   python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "np.sqrt(x)" -b 0 -x 4 --y_min 0 -y 2 
+
+
+  python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "np.sin(x)/(np.exp(x)+1)" -x 2 -y 1.5 -s 0.1
+  python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "1/(x*x+1)"
+
 '''
 
 import matplotlib.pyplot as plt  #导入matplotlib库
