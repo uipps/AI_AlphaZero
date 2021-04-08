@@ -21,6 +21,8 @@ python3.7   （python2.7报错）
   python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "np.sin(x)/(np.exp(x)+1)" -x 2 -y 1.5 -s 0.1
   python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "1/(x*x+1)"
 
+-- 可以保存图片，--save参数给出文件名(路径)即可
+  python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "2**x" -x 7 -y 1.2 -s 0.01 --save "D:/temp/aaaa1"
 '''
 
 import matplotlib.pyplot as plt  #导入matplotlib库
@@ -39,6 +41,7 @@ def run():
     parser.add_argument('-y', type=float, default=2, help='y-Range, begin and end, default 2')
     parser.add_argument('--y_min', type=float, help='y-Range-min, begin, default -2')
     parser.add_argument('-s', type=float, default=0.01, help='x-step, end, default 0.1')
+    parser.add_argument('--save', type=str, help='save image')
 
     args = parser.parse_args()
     yfunc = args.f
@@ -47,11 +50,14 @@ def run():
     yMax = args.y
     yMin = args.y_min
     xStep = args.s
+    xSave = args.save
     #print(yfunc)
     if None==xBegin:
         xBegin = -1 * xEnd	# 默认对称，取x的反
     if None==yMin:
         yMin = -1 * yMax
+    if None==xSave:
+        xSave = 0
 
     ''' 画函数图 '''
     ## 1.创建画布并引入axisartist工具。
@@ -92,6 +98,10 @@ def run():
 
     #绘制图形
     plt.plot(x,y, c='b')
+    if xSave:
+        l_file = xSave + '.png'
+        plt.savefig(l_file)      #保存图片
+        print('save image to ' + l_file)
     plt.show()
 
 if __name__ == '__main__':
