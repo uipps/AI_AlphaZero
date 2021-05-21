@@ -13,9 +13,9 @@ python3.7   （python2.7报错）
 
   python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "np.cos(x)" -x 2 -y 1 -s 0.1
 
-  python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "np.cos(x)" -x 2 -y 1.5  
-  
-  python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "np.sqrt(x)" -b 0 -x 4 --y_min 0 -y 2 
+  python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "np.cos(x)" -x 2 -y 1.5
+
+  python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "np.sqrt(x)" -b 0 -x 4 --y_min 0 -y 2
 
 
   python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "np.sin(x)/(np.exp(x)+1)" -x 2 -y 1.5 -s 0.1
@@ -23,6 +23,14 @@ python3.7   （python2.7报错）
 
 -- 可以保存图片，--save参数给出文件名(路径)即可
   python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "2**x" -x 7 -y 1.2 -s 0.01 --save "D:/temp/aaaa1"
+
+-- macbook
+  (1) sigmiod形式的y数据   #y=1/(1+np.exp(-x))
+  python ~/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "1/(1+np.exp(-x))"
+  (2) tanh函数  y=(np.exp(x)-np.exp(-x))/(np.exp(x)+np.exp(-x))
+  python ~/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "(np.exp(x)-np.exp(-x))/(np.exp(x)+np.exp(-x))" -x 1 -y 1 -s 0.001
+  (3) ReLu
+
 '''
 
 import matplotlib.pyplot as plt  #导入matplotlib库
@@ -64,7 +72,7 @@ def run():
     #创建画布
     fig = plt.figure(figsize=(8, 8))
     #使用axisartist.Subplot方法创建一个绘图区对象ax
-    ax = axisartist.Subplot(fig, 111)  
+    ax = axisartist.Subplot(fig, 111)
     #将绘图区对象添加到画布中
     fig.add_axes(ax)
 
