@@ -1,18 +1,18 @@
-# AI_AlphaZero
-人工智能，深度学习，基于AlphaZero的算法，实现五子棋、中国象棋、围棋等的自学习，还将尝试用AlphaZero实现青蛙过河、野人过河、走迷宫、两人取火柴游戏等......
-不同分支代表不同游戏，例如gomoku、gobang就是五子棋；chess_chinese ( Chinese chess )就是中国象棋；rubikscube就是魔方，又分二阶、三阶等
+# 三阶魔方复原
+  conda python3.7环境
 
-## 五子棋，请切换到gomoku分支：
-gomoku分支 [https://github.com/uipps/AI_AlphaZero/tree/gomoku](https://github.com/uipps/AI_AlphaZero/tree/gomoku)
+## 运行方法
+conda环境下，记得一定要cd进入目录，因其他目录没有文本文件，避免重新生成这些文件，很耗时。
 
-## 中国象棋，python2.7版，请切换到cnChess_py27分支：
-cnChess_py27分支 [https://github.com/uipps/AI_AlphaZero/tree/cnChess_py27](https://github.com/uipps/AI_AlphaZero/tree/cnChess_py27)
+```
+cd /D F:/develope/python/game/mofang_rubikcube/rubiksCube_AlphaZero
+python main.py -s UUUURRRRLFFFDDDDFBLLBLBB
+python main.py -s FFBLBRDLDUBRRFDDLRLUUUFB
+```
 
-## 中国象棋，python3.7版，请切换到cnChess分支：
-cnChess分支 [https://github.com/uipps/AI_AlphaZero/tree/cnChess](https://github.com/uipps/AI_AlphaZero/tree/cnChess)
+### 参数说明
+- -s 按照上、右、前、下、左、后的顺序给出的字符串
 
-## 三阶魔方（python3.7）：
-rubiksCue分支 [https://github.com/uipps/AI_AlphaZero/tree/rubiksCue](https://github.com/uipps/AI_AlphaZero/tree/rubiksCue)
-
-## 二阶魔方（python3.7）：
-rubiksCue2x2分支 [https://github.com/uipps/AI_AlphaZero/tree/rubiksCue2x2](https://github.com/uipps/AI_AlphaZero/tree/rubiksCue2x2)
+### 其他说明
+1. U-上、R-右、F-前、D-下、L-左、B-后
+2. 恢复的标准图案请看 enums.py 文件中的图案
