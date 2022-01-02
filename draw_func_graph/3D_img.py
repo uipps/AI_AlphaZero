@@ -9,6 +9,7 @@
   python F:/develope/python/study_python/draw_func_graph/3D_img.py -f "mobius_01"
   python F:/develope/python/study_python/draw_func_graph/3D_img.py -f qumianPomian_01
   python F:/develope/python/study_python/draw_func_graph/3D_img.py -f img3D1
+  python F:/develope/python/study_python/draw_func_graph/3D_img.py -f spiral_line
 
 '''
 
@@ -215,6 +216,16 @@ def draw_rand():
     ax.set_zlabel('Z')  # 坐标轴
     ax.set_ylabel('Y')
     ax.set_xlabel('X')
+    plt.show()
+
+def spiral_line():
+    #绘制三维双螺旋线 ( https://www.jb51.net/article/142483.htm )
+    t=list(range(100,200))
+    r=[i*np.cos(60+i*360*5) for i in t]
+    theta=[i*np.sin(60+i*360*5) for i in t]
+    z=[50*i for i in t]
+    ax=plt.figure().add_subplot(111,projection='3d')
+    ax.scatter(r,theta,z,'rbrb'*25)
     plt.show()
 
 if __name__ == '__main__':
