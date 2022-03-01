@@ -93,7 +93,7 @@ def run():
     ''' 获取命令行参数 '''
     parser = argparse.ArgumentParser()
     parser.add_argument('-s', type=str, default='UUFUUFUUFRRRRRRRRRFFDFFDFFDDDBDDBDDBLLLLLLLLLUBBUBBUBB', help='cube string...')
-    parser.add_argument('-d', type=str, default='R F d U2', help='cube action string...')
+    parser.add_argument('-d', type=str, default='', help='cube action string...') # R F d U2
     #parser.add_argument('-s', dest='y=f(x), function ', action='store',nargs='?', default='2x', type=str, required=False, help='draw y=2x')
 
     args = parser.parse_args()
@@ -101,18 +101,17 @@ def run():
 
     ##### 执行PHP命令行命令 begin
     dongzuo = args.d
-    cmd_php = 'D:/php8103ntsx64/php.exe F:/develope/javascript/game_/mofang_rubikcube/morefun_uipps/rubikcube.php -g 0 -d "' + dongzuo + '"'
-
-    result = os.popen(cmd_php) 
-    res = result.read() 
-    for line in res.splitlines(): 
-        length = len(line)
-        if (54 == length):
-            cubestring = line
-            print("  PHP得到的结果字符串是: " + line)
-
-    #print("\r\n")
-    print("     执行的PHP命令是cmd: " + cmd_php)
+    if (dongzuo):
+        cmd_php = 'D:/php8103ntsx64/php.exe F:/develope/javascript/game_/mofang_rubikcube/morefun_uipps/rubikcube.php -g 0 -d "' + dongzuo + '"'
+        result = os.popen(cmd_php) 
+        res = result.read() 
+        for line in res.splitlines(): 
+            length = len(line)
+            if (54 == length):
+                cubestring = line
+                print("  PHP得到的结果字符串是: " + line)
+        #print("\r\n")
+        print("     执行的PHP命令是cmd: " + cmd_php)
     ##### 执行PHP命令行命令 end
 
     print("\r\n")
