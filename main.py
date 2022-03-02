@@ -1,3 +1,5 @@
+#!/usr/bin/python
+#coding:utf-8
 '''
   三阶魔方复原，conda环境下，记得一定要cd进入目录，因其他目录没有文本文件，避免重新生成这些文件，很耗时。
   默认按照： 上 右 前 下 左 后 的顺序 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB'.
@@ -103,13 +105,24 @@ def run():
     dongzuo = args.d
     if (dongzuo):
         cmd_php = 'D:/php8103ntsx64/php.exe F:/develope/javascript/game_/mofang_rubikcube/morefun_uipps/rubikcube.php -g 0 -d "' + dongzuo + '"'
+        
+        # 需要conda/pip install commands ，才能 import commands TODO 待验证
+        # output = commands.getstatusoutput(cmd_php) 
+        # print(output)
+
+        # import subprocess
+        # p = subprocess.Popen(cmd_php,shell=True,stdout=subprocess.PIPE) 
+        # out,err = p.communicate() 
+        # for line in out.splitlines(): 
+        #     print(line)
+
         result = os.popen(cmd_php) 
         res = result.read() 
         for line in res.splitlines(): 
             length = len(line)
             if (54 == length):
                 cubestring = line
-                print("  PHP得到的结果字符串是: " + line)
+            print("  PHP得到的结果字符串是: " + line)
         #print("\r\n")
         print("     执行的PHP命令是cmd: " + cmd_php)
     ##### 执行PHP命令行命令 end
