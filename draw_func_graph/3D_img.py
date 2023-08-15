@@ -11,6 +11,8 @@
   python F:/develope/python/study_python/draw_func_graph/3D_img.py -f img3D1
   python F:/develope/python/study_python/draw_func_graph/3D_img.py -f spiral_line
 
+  python F:/develope/python/study_python/draw_func_graph/3D_img.py -f "img3D1_qrcode" -b 50 -x 1000 --y_min 1 -y 39 -s 1
+
 '''
 
 import matplotlib.pyplot as plt  #导入matplotlib库
@@ -48,7 +50,7 @@ def run():
     ''' 画函数图 '''
     y=eval(yfunc)
 
-    if 'img3D1' == yfunc:
+    if 'img3D1_qrcode' == yfunc:
         y(xStep, xBegin, xEnd, yMin, yMax)  # 带参数
     else:
         y()
@@ -201,6 +203,17 @@ def img3D1(xStep, xBegin, xEnd, yMin, yMax):
     X, Y = np.meshgrid(X, Y)
     R = np.sqrt(X**2 + Y**2)
     Z = np.sin(R)
+    # 具体函数方法可用 help(function) 查看，如：help(ax.plot_surface)
+    ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='rainbow')
+    plt.show()
+
+def img3D1_qrcode(xStep, xBegin, xEnd, yMin, yMax):
+    fig = plt.figure()
+    ax = Axes3D(fig)
+    X = np.arange(xBegin, xEnd, xStep)
+    Y = np.arange(yMin, yMax, xStep)
+    X, Y = np.meshgrid(X, Y)
+    Z = X-(4*Y+17)*(X//(4*Y+17))   # x-(4*y+17)*(x//(4*y+17))
     # 具体函数方法可用 help(function) 查看，如：help(ax.plot_surface)
     ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='rainbow')
     plt.show()

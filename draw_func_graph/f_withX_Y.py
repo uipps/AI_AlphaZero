@@ -31,6 +31,12 @@ python3.7   （python2.7报错）
   python ~/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "(np.exp(x)-np.exp(-x))/(np.exp(x)+np.exp(-x))" -x 1 -y 1 -s 0.001
   (3) ReLu
 
+
+-- 二维码margin相关函数图像 （python中//表示舍去法取整） E:/develope/weixin/miniprogram/danche_qrcode_git/utils/weapp-qrcode.js
+python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "500-500//(4*x+17) * (4*x+17)" -b 1 -x 39 -y 100 -s 1
+python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "400-400//(4*x+17) * (4*x+17)" -b 1 -x 39 -y 100 -s 1
+python F:/develope/python/study_python/draw_func_graph/f_withX_Y.py -f "100-100//(4*x+17) * (4*x+17)" -b 1 -x 39 -y 100 -s 1
+
 '''
 
 import matplotlib.pyplot as plt  #导入matplotlib库
