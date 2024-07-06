@@ -28,8 +28,7 @@ def high_precision_nth_root(num, n):
 def run():
     ''' 获取命令行参数 '''
     parser = argparse.ArgumentParser()
-    #parser.add_argument('-d', type=str, default='x**2/2', help='draw y=x**2/2')
-    parser.add_argument('-d', type=int, default=2, help='m√d, the d, default 2')
+    parser.add_argument('-d', type=float, default=2.0, help='m√d, the d, default 2.0')
     parser.add_argument('-m', type=int, default=20, help='m√d,  the m , default 20')
     parser.add_argument('-l', type=int, default=100, help='scale, the num length behind dot., default 100')
 
@@ -38,8 +37,17 @@ def run():
     kaifangci = args.m
     rlt_len = args.l
 
-    if rlt_len < 0 or dishu < 0 or kaifangci < 0 :
-        print(" error! ") 
+    # 见文档 https://mpmath.org/doc/current/functions/powers.html?highlight=root#mpmath.root
+    # -d 可以是负数，开偶数次方的时候不能是负数。
+    if dishu < 0 :
+        print(" 参数-d,底数虽然可以为负数，简单起见，本简单代码暂不支持负数! ") 
+        return 0
+    if rlt_len < 0 :
+        print(" 参数-l,小数点后位数不能是负数 ") 
+        return 0
+    if kaifangci < 0 : 
+        # 文档中可以取0，结果都是1 ， （虽然似乎无意义z^(1/n)）
+        print(" 参数-m, 必须是不小于0的正整数 ") 
         return 0
 
     mp.dps = rlt_len  # 设置保留小数点后 100 位小数
