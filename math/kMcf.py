@@ -14,6 +14,12 @@ python3.7
 
   python F:/develope/python/study_python/math/kMcf.py -l 120 -d 2 -m 30 
 
+  python F:/develope/python/study_python/math/kMcf.py -l 120 -d 6924570972517795787222999651 -m 56 
+
+  # -d 是否用引号都可以
+  python F:/develope/python/study_python/math/kMcf.py -l 120 -m 56 -d "6924570972517795787222999651.1" 
+  python F:/develope/python/study_python/math/kMcf.py -l 120 -m 56 -f mpmath -d "6924570972517795787222999651.1" 
+
 '''
 
 #from sympy import *  #导入sympy库
@@ -21,6 +27,18 @@ python3.7
 import argparse
 #import math
 from mpmath import mp
+from decimal import Decimal, getcontext 
+
+"""  
+    计算一个非常大的数的n次方根，并保留precision位小数。  
+    :param number: 字符串，表示要计算的大数，可以包括小数。  
+    :param n: 正整数，表示次方根的次数。  
+    :param precision: 整数，表示结果要保留的小数位数。  
+    :return: Decimal对象，表示计算结果。  
+"""  
+def calculate_nth_root(num, n,  precision=200):      
+    getcontext().prec = precision + 10  # 额外增加一些精度以避免舍入误差  
+    return Decimal(num) ** (Decimal(1) / Decimal(n))
 
 def high_precision_nth_root(num, n):
     return mp.root(num, n)
@@ -31,11 +49,13 @@ def run():
     parser.add_argument('-d', type=float, default=2.0, help='m√d, the d, default 2.0')
     parser.add_argument('-m', type=int, default=20, help='m√d,  the m , default 20')
     parser.add_argument('-l', type=int, default=100, help='scale, the num length behind dot., default 100')
+    parser.add_argument('-f', type=str, default="", help='function ,  default NULL ')    # 指定处理的func
 
     args = parser.parse_args()
     dishu = args.d
     kaifangci = args.m
     rlt_len = args.l
+    l_func = args.f
 
     # 见文档 https://mpmath.org/doc/current/functions/powers.html?highlight=root#mpmath.root
     # -d 可以是负数，开偶数次方的时候不能是负数。
@@ -50,8 +70,11 @@ def run():
         print(" 参数-m, 必须是不小于0的正整数 ") 
         return 0
 
-    mp.dps = rlt_len  # 设置保留小数点后 100 位小数
-    result_root = high_precision_nth_root(dishu, kaifangci)
+    if ('mpmath' == l_func):
+        mp.dps = rlt_len  # 设置保留小数点后 100 位小数
+        result_root = high_precision_nth_root(dishu, kaifangci)
+    else :
+        result_root = calculate_nth_root(dishu, kaifangci, rlt_len)
     #print("2 的 30 次方根（精确到 100 位）：", result_root)
     print(result_root)
 
