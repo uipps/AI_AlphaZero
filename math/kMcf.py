@@ -25,6 +25,7 @@ python3.7
 #from sympy import *  #导入sympy库
 #import numpy as np  #导入numpy库
 import argparse
+#import sys
 #import math
 from mpmath import mp
 from decimal import Decimal, getcontext 
@@ -46,20 +47,23 @@ def high_precision_nth_root(num, n):
 def run():
     ''' 获取命令行参数 '''
     parser = argparse.ArgumentParser()
+    # print(sys.float_info) # float类型，支持的最大、最小值 max=1.7976931348623157e+308, min=2.2250738585072014e-308
     parser.add_argument('-d', type=float, default=2.0, help='m√d, the d, default 2.0')
+    parser.add_argument('-s', type=str, default="2.0", help='m√d, the d, default 2.0')    # 底数是字符串类型，超长字符串
     parser.add_argument('-m', type=int, default=20, help='m√d,  the m , default 20')
     parser.add_argument('-l', type=int, default=100, help='scale, the num length behind dot., default 100')
-    parser.add_argument('-f', type=str, default="", help='function ,  default NULL ')    # 指定处理的func
+    parser.add_argument('-f', type=str, default="", help='function ,  default NULL ')      # 指定处理的func
 
     args = parser.parse_args()
     dishu = args.d
+    dishu_str = args.s
     kaifangci = args.m
     rlt_len = args.l
     l_func = args.f
 
     # 见文档 https://mpmath.org/doc/current/functions/powers.html?highlight=root#mpmath.root
     # -d 可以是负数，开偶数次方的时候不能是负数。
-    if dishu < 0 :
+    if dishu < 0 or ('-' in dishu_str):
         print(" 参数-d,底数虽然可以为负数，简单起见，本简单代码暂不支持负数! ") 
         return 0
     if rlt_len < 0 :
@@ -70,11 +74,15 @@ def run():
         print(" 参数-m, 必须是不小于0的正整数 ") 
         return 0
 
+    if '' == dishu_str:
+        dishu_str = str(dishu)
+
     if ('mpmath' == l_func):
         mp.dps = rlt_len  # 设置保留小数点后 100 位小数
         result_root = high_precision_nth_root(dishu, kaifangci)
     else :
-        result_root = calculate_nth_root(dishu, kaifangci, rlt_len)
+        #result_root = calculate_nth_root(dishu, kaifangci, rlt_len)
+        result_root = calculate_nth_root(dishu_str, kaifangci, rlt_len)
     #print("2 的 30 次方根（精确到 100 位）：", result_root)
     print(result_root)
 
