@@ -50,6 +50,7 @@ def calculate_nth_root(num, n,  precision=200):
     getcontext().prec = precision + 10  # 额外增加一些精度以避免舍入误差  
     return Decimal(num) ** (Decimal(1) / Decimal(n))
 
+# num可以是308位以内的float。不能是string类型的，否则报错：TypeError: cannot create mpf from 
 def high_precision_nth_root(num, n):
     return mp.root(num, n)
 
@@ -88,11 +89,11 @@ def run():
 
     if ('mpmath' == l_func):
         mp.dps = rlt_len  # 设置保留小数点后 100 位小数
-        result_root = high_precision_nth_root(dishu, kaifangci)
+        result_root = high_precision_nth_root(dishu, kaifangci) # 只能是float类型，不能是string类型，否则报错
     elif 'gmpy2' == l_func :
         result_root = nth_root_gmpy2(dishu_str, kaifangci, rlt_len)  # 小数点后只有37位
     else :
-        #result_root = calculate_nth_root(dishu, kaifangci, rlt_len)
+        # 整数部分超过308位都能处理
         result_root = calculate_nth_root(dishu_str, kaifangci, rlt_len)
     #print("2 的 30 次方根（精确到 100 位）：", result_root)
     print(result_root)
